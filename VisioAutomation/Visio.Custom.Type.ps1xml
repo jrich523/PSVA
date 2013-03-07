@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Types>
+  <Type>
+  <Name>Microsoft.Office.Interop.Visio.ShapeClass</Name>
+  <Members>
+    <ScriptProperty>
+      <Name>PinX</Name>
+      <GetScriptBlock>$this.Cells('pinx').ResultIU</GetScriptBlock>
+      <SetScriptBlock>$this.Cells('pinx').ResultIU = $args[0]</SetScriptBlock>
+    </ScriptProperty>
+    <ScriptProperty>
+      <Name>Piny</Name>
+      <GetScriptBlock>$this.Cells('piny').ResultIU</GetScriptBlock>
+      <SetScriptBlock>$this.Cells('piny').ResultIU = $args[0]</SetScriptBlock>
+    </ScriptProperty>
+    <ScriptProperty>
+      <Name>Width</Name>
+      <GetScriptBlock>$this.Cells('width').ResultIU</GetScriptBlock>
+      <SetScriptBlock>$this.Cells('width').ResultIU = $args[0]</SetScriptBlock>
+    </ScriptProperty>
+    <ScriptProperty>
+      <Name>Height</Name>
+      <GetScriptBlock>$this.Cells('height').ResultIU</GetScriptBlock>
+      <SetScriptBlock>$this.Cells('height').ResultIU = $args[0]</SetScriptBlock>
+    </ScriptProperty>
+    <ScriptProperty>
+      <Name>PinPosition</Name>
+      <GetScriptBlock>
+        $Xval = ""
+        $Yval = ""
+        $setting = ""
+
+        $x = $this.Cells('locpinx').Resultiu
+        $width = $this.width
+        if($x -eq 0){ $Xval="Left"}
+        elseif($x -eq ($width /2)) {$Xval = "Center"}
+        Elseif($x -eq $width) {$Xval = "Right" }
+        else {$Xval = "Custom"}
+
+        $y=$this.Cells('locpiny').resultiu
+        $height=$this.height
+        if($y -eq 0){$Yval="Bottom"}
+        elseif($y -eq ($height/2)){$Yval = "Center"}
+        elseif($y -eq $height){$Yval = "Top"}
+        else{$Yval="Custom"}
+
+        if($Xval -eq "custom" -or $Yval -eq "Custom")
+        {
+        $setting = "Custom"
+        }
+        else
+        {
+        $setting = "$Yval$Xval"
+        }
+        [VisioAutomation.PinPoint]$setting
+      </GetScriptBlock>
+      <SetScriptBlock>
+        $val = [int][VisioAutomation.PinPoint]$args[0]
+        if($val -eq 9){Write-Error "Custom is not a valid set value" -ErrorAction Stop}
+        switch($val)
+        {
+        0 { $this.cells("locpinx").formula = "Width * 0.5";  $this.cells("locpiny").formula = "Height * 0.5"}
+        1 { $this.cells("locpinx").formula = 0;  $this.cells("locpiny").formula = "Height * 0.5"}
+        2 { $this.cells("locpinx").formula = "Width";  $this.cells("locpiny").formula = "Height * 0.5"}
+
+        3 { $this.cells("locpinx").formula = "Width * 0.5";  $this.cells("locpiny").formula = "Height"}
+        4 { $this.cells("locpinx").formula = 0;  $this.cells("locpiny").formula = "Height"}
+        5 { $this.cells("locpinx").formula = "Width";  $this.cells("locpiny").formula = "Height"}
+
+        6 { $this.cells("locpinx").formula = "Width * 0.5";  $this.cells("locpiny").formula = 0}
+        7 { $this.cells("locpinx").formula = "Width";  $this.cells("locpiny").formula = 0}
+        8 { $this.cells("locpinx").formula = 0;  $this.cells("locpiny").formula = 0}
+        }
+      </SetScriptBlock>
+    </ScriptProperty>
+  </Members>
+  </Type>
+  <Type>
+    <Name>System.__ComObject#{000d070c-0000-0000-c000-000000000046}</Name>
+    <Members>
+      <ScriptProperty>
+        <Name>PinX</Name>
+        <GetScriptBlock>$this.Cells('pinx').ResultIU</GetScriptBlock>
+        <SetScriptBlock>$this.Cells('pinx').ResultIU = $args[0]</SetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>Piny</Name>
+        <GetScriptBlock>$this.Cells('piny').ResultIU</GetScriptBlock>
+        <SetScriptBlock>$this.Cells('piny').ResultIU = $args[0]</SetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>Width</Name>
+        <GetScriptBlock>$this.Cells('width').ResultIU</GetScriptBlock>
+        <SetScriptBlock>$this.Cells('width').ResultIU = $args[0]</SetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>Height</Name>
+        <GetScriptBlock>$this.Cells('height').ResultIU</GetScriptBlock>
+        <SetScriptBlock>$this.Cells('height').ResultIU = $args[0]</SetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>PinPosition</Name>
+        <GetScriptBlock>
+          $Xval = ""
+          $Yval = ""
+          $setting = ""
+
+          $x = $this.Cells('locpinx').Resultiu
+          $width = $this.width
+          if($x -eq 0){ $Xval="Left"}
+          elseif($x -eq ($width /2)) {$Xval = "Center"}
+          Elseif($x -eq $width) {$Xval = "Right" }
+          else {$Xval = "Custom"}
+
+          $y=$this.Cells('locpiny').resultiu
+          $height=$this.height
+          if($y -eq 0){$Yval="Bottom"}
+          elseif($y -eq ($height/2)){$Yval = "Center"}
+          elseif($y -eq $height){$Yval = "Top"}
+          else{$Yval="Custom"}
+
+          if($Xval -eq "custom" -or $Yval -eq "Custom")
+          {
+          $setting = "Custom"
+          }
+          else
+          {
+          $setting = "$Yval$Xval"
+          }
+          [VisioAutomation.PinPoint]$setting
+        </GetScriptBlock>
+        <SetScriptBlock>
+          $val = [int][VisioAutomation.PinPoint]$args[0]
+          if($val -eq 9){Write-Error "Custom is not a valid set value" -ErrorAction Stop}
+          switch($val)
+          {
+          0 { $this.cells("locpinx").formula = "Width * 0.5";  $this.cells("locpiny").formula = "Height * 0.5"}
+          1 { $this.cells("locpinx").formula = 0;  $this.cells("locpiny").formula = "Height * 0.5"}
+          2 { $this.cells("locpinx").formula = "Width";  $this.cells("locpiny").formula = "Height * 0.5"}
+
+          3 { $this.cells("locpinx").formula = "Width * 0.5";  $this.cells("locpiny").formula = "Height"}
+          4 { $this.cells("locpinx").formula = 0;  $this.cells("locpiny").formula = "Height"}
+          5 { $this.cells("locpinx").formula = "Width";  $this.cells("locpiny").formula = "Height"}
+
+          6 { $this.cells("locpinx").formula = "Width * 0.5";  $this.cells("locpiny").formula = 0}
+          7 { $this.cells("locpinx").formula = "Width";  $this.cells("locpiny").formula = 0}
+          8 { $this.cells("locpinx").formula = 0;  $this.cells("locpiny").formula = 0}
+          }
+        </SetScriptBlock>
+      </ScriptProperty>
+    </Members>
+  </Type>
+</Types>
