@@ -178,7 +178,8 @@ function Select-visShape
 
     Begin
     {
-        $Selection = (Get-visPage).CreateSelection(0)
+        $Selection = (Get-visApplication).activewindow.selection
+        $Selection.DeselectAll()
     }
     Process
     {
@@ -443,5 +444,118 @@ function Remove-visShape
     }
 }
 
+<#
+.Synopsis
+   Short description
+.DESCRIPTION
+   Long description
+.EXAMPLE
+   Example of how to use this cmdlet
+.EXAMPLE
+   Another example of how to use this cmdlet
+#>
+function Attach-visShape
+{
+    [CmdletBinding()]
+    Param
+    (
+        # Param1 help description
+        [Parameter(Mandatory=$true,
+                   ValueFromPipeline=$true,
+                   Position=0)]
+        $Shape,
+
+        # The selection of items to attach it too
+        
+        $Selection,
+        [VisioAutomation.Side]
+        $Side,
+        [VisioAutomation.Alignment]
+        $Alignment
+    )
+
+    Begin
+    {
+    }
+    Process
+    {
+        #todo: check for pinposition
+        #todo: support multiple shapes
+        ########## assumes center pin!
+        #All maxes
+        $maxtop = $Selection | select -ExpandProperty top | sort | select -last 1
+        $maxbottom = $Selection | select -ExpandProperty bottom | sort | select -first 1
+        $maxleft = $Selection | select -ExpandProperty left | sort | select -first 1
+        $maxright = $Selection | select -ExpandProperty right | sort | select -Last 1
+        $width = $maxright - $maxleft
+        $height = $maxtop - $maxbottom
+        
+        
+        switch($Alignment)
+        {
+            "LeftOrTop"
+            {
+                if([int]$side -le 1) #top/bottom - Left applies, set x
+                {
+                    $shape.pinx = $maxleft + ($shape.width /2)
+                }
+                else #left/right - top applies, set y
+                {
+                    $shape.piny = $maxtop - ($shape.Height /2)
+                    
+                }
+            }
+            "RightOrBottom"
+            {
+                if([int]$side -le 1) #top/bottom
+                {
+                    $shape.pinx = $maxright - ($shape.width /2)
+                }
+                else
+                {
+                    $shape.piny = $maxbottom + ($shape.Height /2)
+                }
+            }
+            "Stretch" 
+            {
+                if([int]$side -le 1) #top/bottom - right applies
+                {
+                    $shape.Width = $width
+                    $shape.pinx = $maxleft + (($maxright - $maxleft) /2)
+
+                }
+                else #left/right applies
+                {
+                    $shape.Height = $height
+                    $shape.Piny = $maxbottom + (($maxtop - $maxbottom) /2)
+                }
+            }
+        }
+
+        ##side
+        switch($side)
+        {
+            "Top"
+            {
+                $shape.piny = $maxtop + ($shape.Height /2)
+            }
+            "Bottom"
+            {
+                $Shape.Piny = $maxbottom - ($shape.Height /2)
+            }
+            "Left"
+            {
+                $shape.pinx = $maxleft - ($shape.width /2)
+            }
+            "Right"
+            {
+                $Shape.PinX = $maxright + ($shape.width /2)
+            }
+        }
+    }
+    End
+    {
+    }
+}
 
 Export-ModuleMember -Function * 

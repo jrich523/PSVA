@@ -26,8 +26,11 @@ New-Enum LayoutIncrementalType @{Align=1;Space=2}
 New-Enum LayoutHorzAlignType @{None=0;Default=1;Left=2;Center=3;Right=4}
 New-Enum LayoutVertAlignType @{None=0;Default=1;Top=2;Middle=3;Bottom=4}
 ##used to set pinpoint, Custom Type data and a function, maybe drop the function
-New-Enum PinPoint @{CenterCenter = 0;CenterLeft = 1;CenterRight = 2;TopCenter = 3;TopLeft = 4;TopRight = 5;BottomCenter = 6;BottomRight = 7;BottomLeft = 8;Custom = 9}
+New-Enum PinPoint @{'Center_Center' = 0;'Center_Left' = 1;'Center_Right' = 2;'Top_Center' = 3;'Top_Left' = 4;'Top_Right' = 5;'Bottom_Center' = 6;'Bottom_Right' = 7;'Bottom_Left' = 8;'Custom' = 9}
 
+##used for Attach-visShape
+New-Enum Side @{Top=0;Bottom=1;Left=2;Right=3}
+New-Enum Alignment @{LeftOrTop=0;RightOrBottom=1;Stretch=2}
 
 New-Enum ObjectTypes @{
 Addon=31;

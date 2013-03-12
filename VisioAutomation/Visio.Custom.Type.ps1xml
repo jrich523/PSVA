@@ -50,7 +50,7 @@
         }
         else
         {
-        $setting = "$Yval$Xval"
+        $setting = "$($Yval)_$($Xval)"
         }
         [VisioAutomation.PinPoint]$setting
       </GetScriptBlock>
@@ -72,6 +72,46 @@
         8 { $this.cells("locpinx").formula = 0;  $this.cells("locpiny").formula = 0}
         }
       </SetScriptBlock>
+    </ScriptProperty>
+    <ScriptProperty>
+      <Name>Top</Name>
+      <GetScriptBlock>
+        $pin = ($this.PinPosition -split "_")[0] #left param
+        if($pin -eq "Top"){return $this.piny}
+        elseif($pin -eq "Bottom"){ return ($this.piny + $this.height) }
+        elseif($pin -eq "Center"){return ($this.piny +($this.height/2))}
+        else{return -1} #todo: figure out based on custom
+      </GetScriptBlock>
+    </ScriptProperty>
+    <ScriptProperty>
+      <Name>Bottom</Name>
+      <GetScriptBlock>
+        $pin = ($this.PinPosition -split "_")[0] #left param
+        if($pin -eq "Top"){return ($this.piny - $this.height)}
+        elseif($pin -eq "Bottom"){ return $this.piny }
+        elseif($pin -eq "Center"){return ($this.piny -($this.height/2))}
+        else{return -1} #todo: figure out based on custom
+      </GetScriptBlock>
+    </ScriptProperty>
+    <ScriptProperty>
+      <Name>Left</Name>
+      <GetScriptBlock>
+        $pin = ($this.PinPosition -split "_")[1] #left param
+        if($pin -eq "Left"){return $this.pinx}
+        elseif($pin -eq "Right"){ return ($this.pinx - $this.width) }
+        elseif($pin -eq "Center"){return ($this.pinx -($this.width/2))}
+        else{return -1} #todo: figure out based on custom
+      </GetScriptBlock>
+    </ScriptProperty>
+    <ScriptProperty>
+      <Name>Right</Name>
+      <GetScriptBlock>
+        $pin = ($this.PinPosition -split "_")[1] #left param
+        if($pin -eq "Right"){return $this.pinx}
+        elseif($pin -eq "Left"){ return ($this.pinx + $this.width) }
+        elseif($pin -eq "Center"){return ($this.pinx +($this.width/2))}
+        else{return -1} #todo: figure out based on custom
+      </GetScriptBlock>
     </ScriptProperty>
   </Members>
   </Type>
@@ -125,7 +165,7 @@
           }
           else
           {
-          $setting = "$Yval$Xval"
+          $setting = "$($Yval)_$($Xval)"
           }
           [VisioAutomation.PinPoint]$setting
         </GetScriptBlock>
@@ -147,6 +187,46 @@
           8 { $this.cells("locpinx").formula = 0;  $this.cells("locpiny").formula = 0}
           }
         </SetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>Top</Name>
+        <GetScriptBlock>
+          $pin = ($this.PinPosition -split "_")[0] #left param
+          if($pin -eq "Top"){return $this.piny}
+          elseif($pin -eq "Bottom"){ return ($this.piny + $this.height) }
+          elseif($pin -eq "Center"){return ($this.piny +($this.height/2))}
+          else{return -1} #todo: figure out based on custom
+        </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>Bottom</Name>
+        <GetScriptBlock>
+          $pin = ($this.PinPosition -split "_")[0] #left param
+          if($pin -eq "Top"){return ($this.piny - $this.height)}
+          elseif($pin -eq "Bottom"){ return $this.piny }
+          elseif($pin -eq "Center"){return ($this.piny -($this.height/2))}
+          else{return -1} #todo: figure out based on custom
+        </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>Left</Name>
+        <GetScriptBlock>
+          $pin = ($this.PinPosition -split "_")[1] #left param
+          if($pin -eq "Left"){return $this.pinx}
+          elseif($pin -eq "Right"){ return ($this.pinx - $this.width) }
+          elseif($pin -eq "Center"){return ($this.pinx -($this.width/2))}
+          else{return -1} #todo: figure out based on custom
+        </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>Right</Name>
+        <GetScriptBlock>
+          $pin = ($this.PinPosition -split "_")[1] #left param
+          if($pin -eq "Right"){return $this.pinx}
+          elseif($pin -eq "Left"){ return ($this.pinx + $this.width) }
+          elseif($pin -eq "Center"){return ($this.pinx +($this.width/2))}
+          else{return -1} #todo: figure out based on custom
+        </GetScriptBlock>
       </ScriptProperty>
     </Members>
   </Type>
